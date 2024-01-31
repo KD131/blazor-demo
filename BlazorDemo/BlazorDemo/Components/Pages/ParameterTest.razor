@@ -1,0 +1,17 @@
+﻿@page "/params"
+@page "/params/{Id:int}"
+
+<h1>Parameter test</h1>
+@if (Id == null)
+{
+    <i>ID is not set. Try a URL like <code>/params/123</code></i>
+}
+else
+{
+    <p>ID: @Id</p>
+}
+
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+}
