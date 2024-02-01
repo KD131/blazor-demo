@@ -1,0 +1,7 @@
+﻿<p>Content will be <em>bold</em>!</p>
+<p><em>@ChildContent</em></p>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}
