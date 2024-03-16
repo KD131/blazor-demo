@@ -1,4 +1,11 @@
+using DotNetEnv;
+using DotNetEnv.Configuration;
+using Microsoft.EntityFrameworkCore;
+using Repository;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddDotNetEnv(options: LoadOptions.TraversePath());
 
 // Add services to the container.
 
@@ -6,6 +13,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<DemoContext>(options =>
+    // Sadly .env doesn't load straight into ConnectionStrings like a normal env var.
+    options.UseSqlServer(DotNetEnv.Env.GetString("SQLCONNSTR_DEMO"))
+);
 
 var app = builder.Build();
 
