@@ -6,6 +6,9 @@ using Repository;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddDotNetEnv(options: LoadOptions.TraversePath());
+// Reloads the env vars to redo the connection string prefix parsing.
+// Presumably causes system env vars to override .env file in case there's a conflict, which isn't ideal.
+builder.Configuration.AddEnvironmentVariables();
 
 // Add services to the container.
 
@@ -15,8 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DemoContext>(options =>
-    // Sadly .env doesn't load straight into ConnectionStrings like a normal env var.
-    options.UseSqlServer(DotNetEnv.Env.GetString("SQLCONNSTR_DEMO"))
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Demo"))
 );
 
 var app = builder.Build();
