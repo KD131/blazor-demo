@@ -18,7 +18,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DemoContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Demo"))
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Demo"),
+        optionsBuilder => optionsBuilder.MigrationsAssembly("Repository"))
 );
 
 var app = builder.Build();
