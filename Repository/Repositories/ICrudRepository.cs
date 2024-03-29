@@ -6,6 +6,8 @@ public interface ICrudRepository<TEntity, TId>
     Task<TEntity?> GetByIdAsync(TId id);
     IEnumerable<TEntity> GetAll();
     Task<IEnumerable<TEntity>> GetAllAsync();
+    int Count();
+    Task<int> CountAsync();
     void Add(TEntity entity);
     Task AddAsync(TEntity entity);
     void Update(TEntity entity);

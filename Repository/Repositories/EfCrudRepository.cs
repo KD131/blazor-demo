@@ -28,6 +28,16 @@ public class EfCrudRepository<TEntity, TId>(DbContext dbContext) : ICrudReposito
         return await _dbSet.ToListAsync();
     }
 
+    public int Count()
+    {
+        return _dbSet.Count();
+    }
+
+    public Task<int> CountAsync()
+    {
+        return _dbSet.CountAsync();
+    }
+
     public void Add(TEntity entity)
     {
         _dbSet.Add(entity);

@@ -88,6 +88,33 @@ public class PostRepositoryTest : IDisposable
     }
     
     [Fact]
+    public void GivenPostInDb_WhenCount_ThenReturnCount()
+    {
+        // Arrange
+        var post1 = new Post
+        {
+            Title = "Test Post 1",
+            Description = "Test Description 1",
+            Content = "Test Content 1"
+        };
+        var post2 = new Post
+        {
+            Title = "Test Post 2",
+            Description = "Test Description 2",
+            Content = "Test Content 2"
+        };
+        _context.Posts.Add(post1);
+        _context.Posts.Add(post2);
+        _context.SaveChanges();
+
+        // Act
+        var result = _postRepository.Count();
+
+        // Assert
+        Assert.Equal(2, result);
+    }
+    
+    [Fact]
     public void GivenPostInDb_WhenUpdate_ThenPostUpdated()
     {
         // Arrange
