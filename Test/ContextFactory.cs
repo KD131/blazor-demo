@@ -8,10 +8,14 @@ public class ContextFactory : IDesignTimeDbContextFactory<DemoContext>
 {
     public DemoContext CreateDbContext(string[] args)
     {
+        return new DemoContext(GetOptions());
+    }
+    
+    public static DbContextOptions<DemoContext> GetOptions()
+    {
         DotNetEnv.Env.TraversePath().Load();
         var optionsBuilder = new DbContextOptionsBuilder<DemoContext>();
-        optionsBuilder.UseSqlServer(DotNetEnv.Env.GetString("SQLCONNSTR_DEMO_TEST"),
-            options => options.MigrationsAssembly("Repository"));
-        return new DemoContext(optionsBuilder.Options);
+        optionsBuilder.UseSqlServer(DotNetEnv.Env.GetString("SQLCONNSTR_DEMO_TEST"));
+        return optionsBuilder.Options;
     }
 }
