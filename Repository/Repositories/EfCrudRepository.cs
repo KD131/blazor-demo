@@ -13,14 +13,29 @@ public class EfCrudRepository<TEntity, TId>(DbContext dbContext) : ICrudReposito
         return _dbSet.Find(id);
     }
 
+    public async Task<TEntity?> GetByIdAsync(TId id)
+    {
+        return await _dbSet.FindAsync(id);
+    }
+
     public IEnumerable<TEntity> GetAll()
     {
         return _dbSet.ToList();
     }
 
+    public async Task<IEnumerable<TEntity>> GetAllAsync()
+    {
+        return await _dbSet.ToListAsync();
+    }
+
     public void Add(TEntity entity)
     {
         _dbSet.Add(entity);
+    }
+
+    public async Task AddAsync(TEntity entity)
+    {
+        await _dbSet.AddAsync(entity);
     }
 
     public void Update(TEntity entity)
@@ -45,5 +60,10 @@ public class EfCrudRepository<TEntity, TId>(DbContext dbContext) : ICrudReposito
     public void Save()
     {
         _dbContext.SaveChanges();
+    }
+
+    public async Task SaveAsync()
+    {
+        await _dbContext.SaveChangesAsync();
     }
 }
