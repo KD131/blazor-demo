@@ -4,6 +4,12 @@ using Repository.Repositories;
 
 namespace Test.Repositories;
 
+/// <summary>
+/// Uses transaction to reset database after each test.
+/// 
+/// Never quite sure when clearing tracked entities is necessary. The tests passed without it.
+/// I've cleared in a couple tests as an example.
+/// </summary>
 public class PostRepositoryTest : IDisposable
 {
     private readonly DemoContext _context;
@@ -14,7 +20,6 @@ public class PostRepositoryTest : IDisposable
         _context = new ContextFactory().CreateDbContext();
         _postRepository = new PostRepository(_context);
         
-        // Resets database using transaction
         _context.Database.BeginTransaction();
     }
 
@@ -36,6 +41,7 @@ public class PostRepositoryTest : IDisposable
         };
         _context.Posts.Add(post);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear();
 
         // Act
         var result = _postRepository.GetById(post.Id);
@@ -126,14 +132,16 @@ public class PostRepositoryTest : IDisposable
         };
         _context.Posts.Add(post);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear();
         
         // Act
         post.Title = "Updated Title";
         _postRepository.Update(post);
         _postRepository.Save();
+        _context.ChangeTracker.Clear();
         
         // Assert
-        var result = _postRepository.GetById(post.Id);
+        var result = _context.Posts.Find(post.Id);
         Assert.Equal("Updated Title", result?.Title);
     }
     
