@@ -6,7 +6,7 @@ namespace Test;
 
 public class ContextFactory : IDesignTimeDbContextFactory<DemoContext>
 {
-    public DemoContext CreateDbContext(string[] args)
+    public DemoContext CreateDbContext(string[]? args = null)
     {
         return new DemoContext(GetOptions());
     }

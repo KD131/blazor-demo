@@ -2,14 +2,14 @@
 
 namespace Model.Entities;
 
-public class Post(int id, string title, string description, string content)
+public class Post()
 {
     [Key]
-    public int Id { get; set; } = id;
+    public int Id { get; set; }
     [StringLength(50)]
-    public string Title { get; set; } = title;
+    public required string Title { get; set; }
     [StringLength(100)]
-    public string Description { get; set; } = description;
+    public required string Description { get; set; }
     [StringLength(500)]
-    public string Content { get; set; } = content;
+    public required string Content { get; set; }
 }
