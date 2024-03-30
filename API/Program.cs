@@ -26,6 +26,9 @@ builder.Services.AddDbContext<DemoContext>(options =>
 // AutoMapper
 builder.Services.AddAutoMapper(typeof(EntityDtoProfile));
 
+// Error handling
+builder.Services.AddProblemDetails();
+
 // Services
 builder.Services.AddScoped<IPostService, PostService>();
 
@@ -34,9 +37,12 @@ builder.Services.AddScoped<IPostRepository, PostRepository>();
 
 var app = builder.Build();
 
+app.UseExceptionHandler();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
