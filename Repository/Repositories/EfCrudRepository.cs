@@ -58,6 +58,9 @@ public class EfCrudRepository<TEntity, TId>(DbContext dbContext) : ICrudReposito
         _dbSet.Remove(entity);
     }
 
+    // Not a fan of delete by id. It still fetches entity to make sure it exists anyway.
+    // Might mean that in the service, the work is repeated because they could do a null check first as well.
+    // Might as well GetById, check for null, then delete the entity.
     public void Delete(TId id)
     {
         var entity = GetById(id);

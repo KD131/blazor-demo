@@ -1,7 +1,10 @@
 using DotNetEnv;
 using DotNetEnv.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Model.Mapping;
 using Repository;
+using Repository.Repositories;
+using Shared.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,10 +19,20 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Database
 builder.Services.AddDbContext<DemoContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Demo"),
         optionsBuilder => optionsBuilder.MigrationsAssembly("Repository"))
 );
+
+// AutoMapper
+builder.Services.AddAutoMapper(typeof(EntityDtoProfile));
+
+// Services
+builder.Services.AddScoped<IPostService, PostService>();
+
+// Repositories
+builder.Services.AddScoped<IPostRepository, PostRepository>();
 
 var app = builder.Build();
 
