@@ -58,6 +58,21 @@ public class PostServiceTest(PostServiceFixture fixture) : IClassFixture<PostSer
     }
     
     [Fact]
+    public async Task GivenPostDoesNotExist_WhenCreate_ThenCreatePost()
+    {
+        // Arrange
+        var post = new PostDto { Title = "Test", Content = "Test" };
+        var entity = fixture.Mapper.Map<Post>(post);
+
+        // Act
+        var result = await fixture.PostService.CreatePostAsync(post);
+
+        // Assert
+        fixture.PostRepository.Verify(x => x.AddAsync(It.IsAny<Post>()));
+        fixture.PostRepository.Verify(x => x.SaveAsync());
+    }
+    
+    [Fact]
     public async Task GivenPostDoesNotExist_WhenUpdate_ThenThrowKeyNotFoundException()
     {
         // Arrange
@@ -88,6 +103,7 @@ public class PostServiceTest(PostServiceFixture fixture) : IClassFixture<PostSer
         // Assert
         fixture.PostRepository.Verify();
         fixture.PostRepository.Verify(x => x.Update(It.Is<Post>(e => e.Id == id)));
+        fixture.PostRepository.Verify(x => x.SaveAsync());
     }
     
     [Fact]
@@ -104,6 +120,7 @@ public class PostServiceTest(PostServiceFixture fixture) : IClassFixture<PostSer
         // Assert
         fixture.PostRepository.Verify();
         fixture.PostRepository.Verify(x => x.Delete(post));
+        fixture.PostRepository.Verify(x => x.SaveAsync());
     }
     
     [Fact]

@@ -26,6 +26,7 @@ public class PostService(IPostRepository postRepository, IMapper mapper) : IPost
     {
         var entity = mapper.Map<Post>(post);
         await postRepository.AddAsync(entity);
+        await postRepository.SaveAsync();
         return entity;
     }
 
@@ -38,6 +39,7 @@ public class PostService(IPostRepository postRepository, IMapper mapper) : IPost
         }
         var entity = mapper.Map<Post>(post);
         postRepository.Update(entity);
+        await postRepository.SaveAsync();
     }
 
     public async Task DeletePostAsync(int id)
@@ -48,5 +50,6 @@ public class PostService(IPostRepository postRepository, IMapper mapper) : IPost
             throw new KeyNotFoundException();
         }
         postRepository.Delete(entity);
+        await postRepository.SaveAsync();
     }
 }
