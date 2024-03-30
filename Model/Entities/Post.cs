@@ -9,7 +9,7 @@ public class Post()
     [StringLength(50)]
     public required string Title { get; set; }
     [StringLength(100)]
-    public required string Description { get; set; }
+    public string? Description { get; set; }
     [StringLength(500)]
     public required string Content { get; set; }
 }
