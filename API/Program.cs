@@ -21,9 +21,7 @@ builder.Services.AddSwaggerGen();
 
 // Database
 builder.Services.AddDbContext<DemoContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Demo"),
-        optionsBuilder => optionsBuilder.MigrationsAssembly("Repository"))
-);
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Demo")));
 
 // AutoMapper
 builder.Services.AddAutoMapper(typeof(EntityDtoProfile));
