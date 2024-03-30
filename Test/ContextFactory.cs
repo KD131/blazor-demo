@@ -1,3 +1,4 @@
+using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Repository;
@@ -13,9 +14,9 @@ public class ContextFactory : IDesignTimeDbContextFactory<DemoContext>
     
     public static DbContextOptions<DemoContext> GetOptions()
     {
-        DotNetEnv.Env.TraversePath().Load();
+        Env.TraversePath().Load();
         var optionsBuilder = new DbContextOptionsBuilder<DemoContext>();
-        optionsBuilder.UseSqlServer(DotNetEnv.Env.GetString("SQLCONNSTR_DEMO_TEST"));
+        optionsBuilder.UseSqlServer(Env.GetString("SQLCONNSTR_DEMO_TEST"));
         return optionsBuilder.Options;
     }
 }

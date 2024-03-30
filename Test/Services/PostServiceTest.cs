@@ -1,7 +1,6 @@
 using Model.Dtos;
 using Model.Entities;
 using Moq;
-using Shared.Services;
 
 namespace Test.Services;
 
