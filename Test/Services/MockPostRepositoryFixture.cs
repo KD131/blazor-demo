@@ -1,8 +1,8 @@
 using AutoMapper;
+using Core.Services;
 using Model.Mapping;
 using Moq;
 using Repository.Repositories;
-using Shared.Services;
 
 namespace Test.Services;
 
@@ -10,7 +10,7 @@ public class MockPostRepositoryFixture
 {
     public readonly IMapper Mapper;
     public readonly Mock<IPostRepository> PostRepository;
-    public readonly PostService PostService;
+    public readonly IPostService PostService;
 
     public MockPostRepositoryFixture()
     {

@@ -1,10 +1,10 @@
 using System.Net;
 using System.Net.Http.Json;
+using Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using Shared.Services;
 
 namespace Test.Controllers;
 

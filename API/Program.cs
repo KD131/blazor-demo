@@ -1,10 +1,10 @@
+using Core.Services;
 using DotNetEnv;
 using DotNetEnv.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Model.Mapping;
 using Repository;
 using Repository.Repositories;
-using Shared.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

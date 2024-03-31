@@ -3,53 +3,18 @@ using Model.Dtos;
 using Model.Entities;
 using Repository.Repositories;
 
-namespace Shared.Services;
+namespace Core.Services;
 
-public class PostService(IPostRepository postRepository, IMapper mapper) : IPostService
+public class PostService(IPostRepository postRepository, IMapper mapper)
+    : CrudService<Post, int>(postRepository, mapper), IPostService
 {
-    public async Task<Post?> GetPostByIdAsync(int id)
+    public async Task<PostDto> CreateAsync(PostDto post)
     {
-        var post = await postRepository.GetByIdAsync(id);
-        if (post == null)
-        {
-            throw new KeyNotFoundException();
-        }
-        return post;
+        return await base.CreateAsync<PostDto, PostDto>(post);
     }
 
-    public async Task<IEnumerable<Post>> GetPostsAsync()
+    public async Task UpdateAsync(PostDto post)
     {
-        return await postRepository.GetAllAsync();
-    }
-
-    public async Task<Post> CreatePostAsync(PostDto post)
-    {
-        var entity = mapper.Map<Post>(post);
-        await postRepository.AddAsync(entity);
-        await postRepository.SaveAsync();
-        return entity;
-    }
-
-    public async Task UpdatePostAsync(PostDto post)
-    {
-        var exists = await postRepository.GetByIdAsync(post.Id) != null;
-        if (!exists)
-        {
-            throw new KeyNotFoundException();
-        }
-        var entity = mapper.Map<Post>(post);
-        postRepository.Update(entity);
-        await postRepository.SaveAsync();
-    }
-
-    public async Task DeletePostAsync(int id)
-    {
-        var entity = await postRepository.GetByIdAsync(id);
-        if (entity == null)
-        {
-            throw new KeyNotFoundException();
-        }
-        postRepository.Delete(entity);
-        await postRepository.SaveAsync();
+        await base.UpdateAsync(post.Id, post);
     }
 }

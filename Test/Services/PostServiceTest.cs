@@ -14,7 +14,7 @@ public class PostServiceTest(MockPostRepositoryFixture fixture) : IClassFixture<
         fixture.PostRepository.Setup(x => x.GetByIdAsync(1)).ReturnsAsync(post).Verifiable();
 
         // Act
-        var result = await fixture.PostService.GetPostByIdAsync(1);
+        var result = await fixture.PostService.GetByIdAsync(1);
 
         // Assert
         fixture.PostRepository.Verify();
@@ -33,7 +33,7 @@ public class PostServiceTest(MockPostRepositoryFixture fixture) : IClassFixture<
         fixture.PostRepository.Setup(x => x.GetAllAsync()).ReturnsAsync(posts).Verifiable();
 
         // Act
-        var result = await fixture.PostService.GetPostsAsync();
+        var result = await fixture.PostService.GetAllAsync();
 
         // Assert
         fixture.PostRepository.Verify();
@@ -50,7 +50,7 @@ public class PostServiceTest(MockPostRepositoryFixture fixture) : IClassFixture<
         // Act
         async Task Act()
         {
-            await fixture.PostService.GetPostByIdAsync(id);
+            await fixture.PostService.GetByIdAsync(id);
         }
 
         // Assert
@@ -66,7 +66,7 @@ public class PostServiceTest(MockPostRepositoryFixture fixture) : IClassFixture<
         var entity = fixture.Mapper.Map<Post>(post);
 
         // Act
-        var result = await fixture.PostService.CreatePostAsync(post);
+        var result = await fixture.PostService.CreateAsync(post);
 
         // Assert
         fixture.PostRepository.Verify(x => x.AddAsync(It.IsAny<Post>()));
@@ -84,7 +84,7 @@ public class PostServiceTest(MockPostRepositoryFixture fixture) : IClassFixture<
         // Act
         async Task Act()
         {
-            await fixture.PostService.UpdatePostAsync(post);
+            await fixture.PostService.UpdateAsync(id, post);
         }
 
         // Assert
@@ -102,7 +102,7 @@ public class PostServiceTest(MockPostRepositoryFixture fixture) : IClassFixture<
         fixture.PostRepository.Setup(x => x.GetByIdAsync(id)).ReturnsAsync(entity).Verifiable();
 
         // Act
-        await fixture.PostService.UpdatePostAsync(post);
+        await fixture.PostService.UpdateAsync(id, post);
 
         // Assert
         fixture.PostRepository.Verify();
@@ -119,7 +119,7 @@ public class PostServiceTest(MockPostRepositoryFixture fixture) : IClassFixture<
         fixture.PostRepository.Setup(x => x.GetByIdAsync(id)).ReturnsAsync(post).Verifiable();
 
         // Act
-        await fixture.PostService.DeletePostAsync(id);
+        await fixture.PostService.DeleteAsync(id);
 
         // Assert
         fixture.PostRepository.Verify();
@@ -137,7 +137,7 @@ public class PostServiceTest(MockPostRepositoryFixture fixture) : IClassFixture<
         // Act
         async Task Act()
         {
-            await fixture.PostService.DeletePostAsync(id);
+            await fixture.PostService.DeleteAsync(id);
         }
 
         // Assert

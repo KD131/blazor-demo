@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Core.Services;
+using Microsoft.AspNetCore.Mvc;
 using Model.Dtos;
 using Model.Entities;
-using Shared.Services;
 
 namespace API.Controllers;
 
@@ -13,10 +13,10 @@ public class PostController(IPostService postService) : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<Post>>> GetPosts()
     {
-        var posts = await postService.GetPostsAsync();
+        var posts = await postService.GetAllAsync();
         return Ok(posts);
     }
-    
+
     [HttpGet("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -24,7 +24,7 @@ public class PostController(IPostService postService) : ControllerBase
     {
         try
         {
-            var post = await postService.GetPostByIdAsync(id);
+            var post = await postService.GetByIdAsync(id);
             return Ok(post);
         }
         catch (KeyNotFoundException e)
@@ -32,29 +32,26 @@ public class PostController(IPostService postService) : ControllerBase
             return NotFound();
         }
     }
-    
+
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<Post>> CreatePost(PostDto post)
     {
-        var createdPost = await postService.CreatePostAsync(post);
+        var createdPost = await postService.CreateAsync(post);
         return CreatedAtAction(nameof(GetPostById), new { id = createdPost.Id }, createdPost);
     }
-    
+
     [HttpPut("{id:int}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> UpdatePost(int id, PostDto post)
     {
-        if (id != post.Id)
-        {
-            return BadRequest();
-        }
+        if (id != post.Id) return BadRequest();
         try
         {
-            await postService.UpdatePostAsync(post);
+            await postService.UpdateAsync(id, post);
             return NoContent();
         }
         catch (KeyNotFoundException e)
@@ -62,7 +59,7 @@ public class PostController(IPostService postService) : ControllerBase
             return NotFound();
         }
     }
-    
+
     [HttpDelete("{id:int}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -70,7 +67,7 @@ public class PostController(IPostService postService) : ControllerBase
     {
         try
         {
-            await postService.DeletePostAsync(id);
+            await postService.DeleteAsync(id);
             return NoContent();
         }
         catch (KeyNotFoundException e)

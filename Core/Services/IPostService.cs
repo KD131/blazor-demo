@@ -1,13 +1,10 @@
 using Model.Dtos;
 using Model.Entities;
 
-namespace Shared.Services;
+namespace Core.Services;
 
-public interface IPostService
+public interface IPostService : ICrudService<Post, int>
 {
-    Task<Post?> GetPostByIdAsync(int id);
-    Task<IEnumerable<Post>> GetPostsAsync();
-    Task<Post> CreatePostAsync(PostDto post);
-    Task UpdatePostAsync(PostDto post);
-    Task DeletePostAsync(int id);
+    Task<PostDto> CreateAsync(PostDto post);
+    Task UpdateAsync(PostDto post);
 }
