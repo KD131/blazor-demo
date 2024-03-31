@@ -6,13 +6,13 @@ using Shared.Services;
 
 namespace Test.Services;
 
-public class PostServiceFixture
+public class MockPostRepositoryFixture
 {
-    public readonly Mock<IPostRepository> PostRepository;
     public readonly IMapper Mapper;
+    public readonly Mock<IPostRepository> PostRepository;
     public readonly PostService PostService;
-    
-    public PostServiceFixture()
+
+    public MockPostRepositoryFixture()
     {
         PostRepository = new Mock<IPostRepository>();
         Mapper = new MapperConfiguration(cfg => cfg.AddProfile<EntityDtoProfile>()).CreateMapper();

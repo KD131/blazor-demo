@@ -4,9 +4,8 @@ using Moq;
 
 namespace Test.Services;
 
-public class PostServiceTest(PostServiceFixture fixture) : IClassFixture<PostServiceFixture>
+public class PostServiceTest(MockPostRepositoryFixture fixture) : IClassFixture<MockPostRepositoryFixture>
 {
-
     [Fact]
     public async Task GivenPostExists_WhenGetById_ThenReturnDto()
     {
@@ -21,15 +20,15 @@ public class PostServiceTest(PostServiceFixture fixture) : IClassFixture<PostSer
         fixture.PostRepository.Verify();
         Assert.Equal(post, result);
     }
-    
+
     [Fact]
     public async Task GivenPostsExist_WhenGetAll_ThenReturnDtos()
     {
         // Arrange
         var posts = new List<Post>
         {
-            new Post { Id = 1, Title = "Test", Content = "Test" },
-            new Post { Id = 2, Title = "Test", Content = "Test" }
+            new() { Id = 1, Title = "Test", Content = "Test" },
+            new() { Id = 2, Title = "Test", Content = "Test" }
         };
         fixture.PostRepository.Setup(x => x.GetAllAsync()).ReturnsAsync(posts).Verifiable();
 
@@ -40,7 +39,7 @@ public class PostServiceTest(PostServiceFixture fixture) : IClassFixture<PostSer
         fixture.PostRepository.Verify();
         Assert.Equal(posts, result);
     }
-    
+
     [Fact]
     public async Task GivenPostDoesNotExist_WhenGetById_ThenThrowKeyNotFoundException()
     {
@@ -49,13 +48,16 @@ public class PostServiceTest(PostServiceFixture fixture) : IClassFixture<PostSer
         fixture.PostRepository.Setup(x => x.GetByIdAsync(id)).ReturnsAsync((Post?)null).Verifiable();
 
         // Act
-        async Task Act() => await fixture.PostService.GetPostByIdAsync(id);
+        async Task Act()
+        {
+            await fixture.PostService.GetPostByIdAsync(id);
+        }
 
         // Assert
         await Assert.ThrowsAsync<KeyNotFoundException>(Act);
         fixture.PostRepository.Verify();
     }
-    
+
     [Fact]
     public async Task GivenPostDoesNotExist_WhenCreate_ThenCreatePost()
     {
@@ -70,7 +72,7 @@ public class PostServiceTest(PostServiceFixture fixture) : IClassFixture<PostSer
         fixture.PostRepository.Verify(x => x.AddAsync(It.IsAny<Post>()));
         fixture.PostRepository.Verify(x => x.SaveAsync());
     }
-    
+
     [Fact]
     public async Task GivenPostDoesNotExist_WhenUpdate_ThenThrowKeyNotFoundException()
     {
@@ -80,13 +82,16 @@ public class PostServiceTest(PostServiceFixture fixture) : IClassFixture<PostSer
         fixture.PostRepository.Setup(x => x.GetByIdAsync(id)).ReturnsAsync((Post?)null).Verifiable();
 
         // Act
-        async Task Act() => await fixture.PostService.UpdatePostAsync(post);
+        async Task Act()
+        {
+            await fixture.PostService.UpdatePostAsync(post);
+        }
 
         // Assert
         await Assert.ThrowsAsync<KeyNotFoundException>(Act);
         fixture.PostRepository.Verify();
     }
-    
+
     [Fact]
     public async Task GivenPostExists_WhenUpdate_ThenUpdatePost()
     {
@@ -104,7 +109,7 @@ public class PostServiceTest(PostServiceFixture fixture) : IClassFixture<PostSer
         fixture.PostRepository.Verify(x => x.Update(It.Is<Post>(e => e.Id == id)));
         fixture.PostRepository.Verify(x => x.SaveAsync());
     }
-    
+
     [Fact]
     public async Task GivenPostExists_WhenDelete_ThenDeletePost()
     {
@@ -121,7 +126,7 @@ public class PostServiceTest(PostServiceFixture fixture) : IClassFixture<PostSer
         fixture.PostRepository.Verify(x => x.Delete(post));
         fixture.PostRepository.Verify(x => x.SaveAsync());
     }
-    
+
     [Fact]
     public async Task GivenPostDoesNotExist_WhenDelete_ThenThrowKeyNotFoundException()
     {
@@ -130,7 +135,10 @@ public class PostServiceTest(PostServiceFixture fixture) : IClassFixture<PostSer
         fixture.PostRepository.Setup(x => x.GetByIdAsync(id)).ReturnsAsync((Post?)null).Verifiable();
 
         // Act
-        async Task Act() => await fixture.PostService.DeletePostAsync(id);
+        async Task Act()
+        {
+            await fixture.PostService.DeletePostAsync(id);
+        }
 
         // Assert
         await Assert.ThrowsAsync<KeyNotFoundException>(Act);
