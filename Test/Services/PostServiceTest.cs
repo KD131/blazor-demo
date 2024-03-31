@@ -18,7 +18,7 @@ public class PostServiceTest(MockPostRepositoryFixture fixture) : IClassFixture<
 
         // Assert
         fixture.PostRepository.Verify();
-        Assert.Equal(post, result);
+        Assert.Equal(post.Id, result.Id);
     }
 
     [Fact]
@@ -37,7 +37,7 @@ public class PostServiceTest(MockPostRepositoryFixture fixture) : IClassFixture<
 
         // Assert
         fixture.PostRepository.Verify();
-        Assert.Equal(posts, result);
+        Assert.Equal(posts.Count, result.Count());
     }
 
     [Fact]

@@ -3,8 +3,6 @@ using Model.Entities;
 
 namespace Core.Services;
 
-public interface IPostService : ICrudService<Post, int>
+public interface IPostService : IGenericClassCrudService<Post, int, PostDto, PostDto, PostDto>
 {
-    Task<PostDto> CreateAsync(PostDto post);
-    Task UpdateAsync(PostDto post);
 }

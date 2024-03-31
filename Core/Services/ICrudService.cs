@@ -6,8 +6,11 @@ public interface ICrudService<TEntity, TId> where TEntity : class
         where TCreateDto : class
         where TDto : class;
 
-    Task<TEntity> GetByIdAsync(TId id);
-    Task<IEnumerable<TEntity>> GetAllAsync();
+    Task<TDto> GetByIdAsync<TDto>(TId id)
+        where TDto : class;
+
+    Task<IEnumerable<TDto>> GetAllAsync<TDto>()
+        where TDto : class;
 
     Task UpdateAsync<TUpdateDto>(TId id, TUpdateDto entity)
         where TUpdateDto : class;
