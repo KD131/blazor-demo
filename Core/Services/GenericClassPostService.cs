@@ -5,7 +5,7 @@ using Repository.Repositories;
 
 namespace Core.Services;
 
-public class PostService(IPostRepository postRepository, IMapper mapper)
+public class GenericClassPostService(IPostRepository postRepository, IMapper mapper)
     : CrudService<Post, int, PostDto, PostDto, PostDto>(postRepository, mapper), IPostService
 {
 }

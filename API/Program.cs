@@ -30,7 +30,7 @@ builder.Services.AddAutoMapper(typeof(EntityDtoProfile));
 builder.Services.AddProblemDetails();
 
 // Services
-builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IPostService, GenericClassPostService>();
 
 // Repositories
 builder.Services.AddScoped<IPostRepository, PostRepository>();

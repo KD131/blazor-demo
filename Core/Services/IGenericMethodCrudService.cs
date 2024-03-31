@@ -1,6 +1,6 @@
 namespace Core.Services;
 
-public interface ICrudService<TEntity, TId> where TEntity : class
+public interface IGenericMethodCrudService<TEntity, TId> where TEntity : class
 {
     Task<TDto> CreateAsync<TCreateDto, TDto>(TCreateDto dto)
         where TCreateDto : class

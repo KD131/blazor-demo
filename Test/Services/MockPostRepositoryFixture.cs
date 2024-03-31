@@ -16,6 +16,6 @@ public class MockPostRepositoryFixture
     {
         PostRepository = new Mock<IPostRepository>();
         Mapper = new MapperConfiguration(cfg => cfg.AddProfile<EntityDtoProfile>()).CreateMapper();
-        PostService = new PostService(PostRepository.Object, Mapper);
+        PostService = new GenericClassPostService(PostRepository.Object, Mapper);
     }
 }

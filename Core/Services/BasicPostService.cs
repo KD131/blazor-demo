@@ -5,6 +5,11 @@ using Repository.Repositories;
 
 namespace Core.Services;
 
+/// <summary>
+///     Implementation of service class that implements all methods directly instead of inheriting from a generic service.
+/// </summary>
+/// <param name="repository"></param>
+/// <param name="mapper"></param>
 public class BasicPostService(ICrudRepository<Post, int> repository, IMapper mapper) : IPostService
 {
     public async Task<PostDto> CreateAsync(PostDto dto)

@@ -14,10 +14,6 @@ namespace Core.Services;
 /// <typeparam name="TDto">Type of return DTO</typeparam>
 /// <typeparam name="TCreateDto">Type of DTO to create entity</typeparam>
 /// <typeparam name="TUpdateDto">Type of DTO to update entity</typeparam>
-/// <remarks>
-///     Uses generic methods because they might take a different shape of DTO. This is almost certainly the wrong way
-///     to do this.
-/// </remarks>
 public class CrudService<TEntity, TId, TDto, TCreateDto, TUpdateDto>(
     ICrudRepository<TEntity, TId> repository,
     IMapper mapper)
