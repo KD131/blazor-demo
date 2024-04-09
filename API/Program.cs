@@ -23,6 +23,8 @@ builder.Services.AddSwaggerGen();
 // Database
 builder.Services.AddDbContext<DemoContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Demo")));
+// For generic repositories that take a DbContext, not a specific one.
+builder.Services.AddScoped<DbContext, DemoContext>();
 
 // AutoMapper
 builder.Services.AddAutoMapper(typeof(EntityDtoProfile));
@@ -31,9 +33,11 @@ builder.Services.AddAutoMapper(typeof(EntityDtoProfile));
 builder.Services.AddProblemDetails();
 
 // Services
-builder.Services.AddScoped<IPostService, GenericClassPostService>();
+builder.Services.AddScoped(typeof(IGenericMethodCrudService<,>), typeof(GenericMethodCrudService<,>));
+builder.Services.AddScoped<IPostService, GenericMethodPostService>();
 
 // Repositories
+builder.Services.AddScoped(typeof(ICrudRepository<,>), typeof(EfCrudRepository<,>));
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 
 var app = builder.Build();

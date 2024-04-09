@@ -1,4 +1,5 @@
 using Model.Dtos;
+using Model.Entities;
 
 namespace Core.Services;
 
@@ -6,7 +7,7 @@ namespace Core.Services;
 /// Basically a facade for the generic service, to make it easier to use, and restrict access to generic methods.
 /// </summary>
 /// <param name="service">Backing service that uses generic methods.</param>
-public class GenericMethodPostService(IGenericMethodCrudService<PostDto, int> service) : IPostService
+public class GenericMethodPostService(IGenericMethodCrudService<Post, int> service) : IPostService
 {
     public async Task<PostDto> CreateAsync(PostDto dto)
     {
