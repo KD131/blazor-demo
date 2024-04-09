@@ -14,7 +14,7 @@ namespace Core.Services;
 /// <typeparam name="TDto">Type of return DTO</typeparam>
 /// <typeparam name="TCreateDto">Type of DTO to create entity</typeparam>
 /// <typeparam name="TUpdateDto">Type of DTO to update entity</typeparam>
-public class CrudService<TEntity, TId, TDto, TCreateDto, TUpdateDto>(
+public class GenericClassCrudService<TEntity, TId, TDto, TCreateDto, TUpdateDto>(
     ICrudRepository<TEntity, TId> repository,
     IMapper mapper)
     : IGenericClassCrudService<TEntity, TId, TDto, TCreateDto, TUpdateDto>
