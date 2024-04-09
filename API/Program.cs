@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddDotNetEnv(options: LoadOptions.TraversePath());
 // Reloads the env vars to redo the connection string prefix parsing.
 builder.Configuration.AddEnvironmentVariables();
+builder.Configuration.AddCommandLine(args);
 
 // Add services to the container.
 
