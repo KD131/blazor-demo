@@ -1,7 +1,8 @@
 using BlazorDemo.Components;
 using Microsoft.FluentUI.AspNetCore.Components;
-using _Imports = BlazorDemo.Client._Imports;
+using Model.Mapping;
 using MudBlazor.Services;
+using _Imports = BlazorDemo.Client._Imports;
 
 namespace BlazorDemo;
 
@@ -20,6 +21,8 @@ public class Program
         {
             BaseAddress = new Uri("http://localhost:5055")
         });
+
+        builder.Services.AddAutoMapper(typeof(ViewModelDtoProfile));
 
         builder.Services.AddMudServices();
         builder.Services.AddFluentUIComponents();

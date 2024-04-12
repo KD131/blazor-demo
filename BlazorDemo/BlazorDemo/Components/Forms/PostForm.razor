@@ -1,0 +1,50 @@
+@rendermode InteractiveServer
+@using Color = MudBlazor.Color
+@using Model.ViewModels
+@using AutoMapper
+@using Model.Dtos
+@inject HttpClient Http
+@inject IMapper Mapper
+
+<h3>PostForm</h3>
+
+<MudCard>
+    <MudForm Model="post" @ref="form" @bind-Errors="errors">
+        <MudTextField Label="Title" @bind-Value="post.Title" Clearable="true"/>
+        <MudTextField Label="Description (optional)" @bind-Value="post.Description" Clearable="true" Counter="100"/>
+        <MudTextField Label="Content" @bind-Value="post.Content" Clearable="true" Counter="500" AutoGrow="true" Lines="5"/>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(async () => await HandleSubmit())">Submit</MudButton>
+    </MudForm>
+</MudCard>
+
+@if (errors.Length > 0)
+{
+    <MudAlert Severity="Severity.Error" Elevation="0" IsOpen="true" FadeOutDuration="1000" TransitionDuration="1000">
+        @foreach (var error in errors)
+        {
+            <p>@error</p>
+        }
+    </MudAlert>
+}
+
+@code {
+    MudForm form;
+    PostViewModel post = new();
+    string[] errors = { };
+
+    private async Task HandleSubmit()
+    {
+        await form.Validate();
+
+        if (form.IsValid)
+        {
+            var dto = Mapper.Map<PostDto>(post);
+            var response = await Http.PostAsJsonAsync("api/post", dto);
+            if (response.IsSuccessStatusCode)
+            {
+                await form.ResetAsync();
+            }
+        }
+    }
+
+}
