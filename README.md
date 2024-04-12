@@ -36,8 +36,17 @@ This a demo project meant to showcase various best practices and technologies fo
 - Frontend tests.
 - Benchmarking if I find something to benchmark.
 
+**IDE**
+
+- Rider instead of Visual Studio.
+
 ## Repository pattern
 
 I have many complicated feelings about it, but this is an exploration of how to implement and use it.
 
 Not everything might be optimal, and this might be mixing layers, but I also want to show examples of how AutoMapper integrates with the ORM.
+
+## Acceptance testing
+
+As of writing, SpecFlow has been abandoned by its maintainers, Tricentis, since acquiring it.
+I'm therefore using Reqnroll instead, which is a fork of Specflow made by the original creator.
