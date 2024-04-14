@@ -28,10 +28,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\API\API.csproj"/>
-        <ProjectReference Include="..\Core\Core.csproj"/>
-        <ProjectReference Include="..\Model\Model.csproj"/>
-        <ProjectReference Include="..\Repository\Repository.csproj"/>
+        <ProjectReference Include="..\..\src\API\API.csproj"/>
+        <ProjectReference Include="..\..\src\BlazorDemo\BlazorDemo\BlazorDemo.csproj"/>
+        <ProjectReference Include="..\..\src\Core\Core.csproj"/>
+        <ProjectReference Include="..\..\src\Model\Model.csproj"/>
+        <ProjectReference Include="..\..\src\Repository\Repository.csproj"/>
     </ItemGroup>
 
 </Project>

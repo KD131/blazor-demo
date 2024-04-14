@@ -19,4 +19,13 @@ public class DemoWebApplicationFactory<TProgram> : WebApplicationFactory<TProgra
             services.AddScoped(_ => contextOptions);
         });
     }
+
+    // Gets overridden when configuring client in WebApplicationFactory simply because of how the methods get called.
+    // Very annoying. It basically does nothing.
+    protected override void ConfigureClient(HttpClient client)
+    {
+        ArgumentNullException.ThrowIfNull(client);
+
+        client.BaseAddress = new Uri("http://localhost:5055");
+    }
 }
