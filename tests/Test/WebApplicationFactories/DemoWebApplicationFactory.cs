@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Test.WebApplicationFactories;
 
@@ -15,8 +14,7 @@ public class DemoWebApplicationFactory<TProgram> : WebApplicationFactory<TProgra
         builder.UseEnvironment("Production");
         builder.ConfigureServices(services =>
         {
-            var contextOptions = ContextFactory.GetOptions();
-            services.AddScoped(_ => contextOptions);
+            services.AddTestDb();
         });
     }
 
