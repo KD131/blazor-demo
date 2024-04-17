@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Test.Controllers;
+namespace Test.WebApplicationFactories;
 
 /// <summary>
 ///     Configures web API for testing. Uses the test database. If mocking services is desired, do that in the test class.

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using Test.WebApplicationFactories;
 using Xunit.Abstractions;
 
 namespace Test.Controllers;
